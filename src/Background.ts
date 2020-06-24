@@ -1,15 +1,16 @@
-import { IAppState } from "./App";
-import Constants from "./Constants";
+import { IAppState } from './App';
+import Constants from './Constants';
 
 declare const chrome;
 
 export default class Background {
   private backgroundPort;
+
   private bg;
 
   constructor() {
     try {
-      this.backgroundPort = chrome.runtime.connect({ name: "bgWatchdog" });
+      this.backgroundPort = chrome.runtime.connect({ name: 'bgWatchdog' });
       this.bg = chrome.extension.getBackgroundPage();
       this.bg.logoutTime = Constants.autoLogoutTime;
       this.bg.clearLogoutTimer();

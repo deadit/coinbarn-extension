@@ -1,8 +1,8 @@
-import { generateMnemonic, validateMnemonic } from "bip39";
-import React from "react";
-import Account from "../Account";
-import CoinbarnStorage from "../CoinbarnStorage";
-import homaImg from "../img/homa_register.svg";
+import { generateMnemonic, validateMnemonic } from 'bip39';
+import React from 'react';
+import Account from '../Account';
+import CoinbarnStorage from '../CoinbarnStorage';
+import homaImg from '../img/homa_register.svg';
 
 declare const navigator;
 
@@ -20,17 +20,14 @@ interface ISeedState {
   repeatPhase: boolean;
 }
 
-export default class SeedScreen extends React.Component<
-  ISeedProps,
-  ISeedState
-> {
+export default class SeedScreen extends React.Component<ISeedProps, ISeedState> {
   constructor(props) {
     super(props);
     this.state = {
       mnemonic: generateMnemonic(128),
-      mnemonicBack: "",
+      mnemonicBack: '',
       repeatPhase: false,
-      seedFormValid: true
+      seedFormValid: true,
     };
   }
 
@@ -62,16 +59,12 @@ export default class SeedScreen extends React.Component<
 
   public submitSeed = async () => {
     if (this.state.repeatPhase || this.props.regRecover) {
-      const newAcc = new Account(
-        this.props.account.name,
-        this.state.mnemonicBack,
-        this.props.account.minerAcc
-      );
+      const newAcc = new Account(this.props.account.name, this.state.mnemonicBack, this.props.account.minerAcc);
       await CoinbarnStorage.saveAccount(newAcc, this.props.regPassword);
       this.props.updateState({
         account: newAcc,
-        screen: "start",
-        screenData: ""
+        screen: 'start',
+        screenData: '',
       });
     } else {
       this.setState({ repeatPhase: true, seedFormValid: false });
@@ -80,7 +73,7 @@ export default class SeedScreen extends React.Component<
 
   public onBack = async () => {
     if (!this.state.repeatPhase) {
-      this.props.updateState({ screen: "register" });
+      this.props.updateState({ screen: 'register' });
     } else {
       this.setState({ repeatPhase: false, seedFormValid: true });
     }
@@ -88,15 +81,9 @@ export default class SeedScreen extends React.Component<
 
   public address(): string {
     if (this.state.repeatPhase || this.props.regRecover) {
-      return new Account(
-        "?",
-        this.state.mnemonicBack,
-        this.props.account.minerAcc
-      ).address;
-    } else {
-      return new Account("?", this.state.mnemonic, this.props.account.minerAcc)
-        .address;
+      return new Account('?', this.state.mnemonicBack, this.props.account.minerAcc).address;
     }
+    return new Account('?', this.state.mnemonic, this.props.account.minerAcc).address;
   }
 
   public render() {
@@ -107,8 +94,7 @@ export default class SeedScreen extends React.Component<
       if (this.props.regRecover) {
         message = (
           <div id="descriptionDiv">
-            Enter your <strong>Secret Backup Phrase</strong> to access your
-            wallet
+            Enter your <strong>Secret Backup Phrase</strong> to access your wallet
           </div>
         );
       } else {
@@ -120,13 +106,9 @@ export default class SeedScreen extends React.Component<
         );
       }
       textarea = (
-        <textarea
-          className="ffn"
-          value={this.state.mnemonicBack}
-          onChange={this.handleSeedUserInput.bind(this)}
-        />
+        <textarea className="ffn" value={this.state.mnemonicBack} onChange={this.handleSeedUserInput.bind(this)} />
       );
-      buttons = "";
+      buttons = '';
     } else {
       message = (
         <div id="descriptionDiv">
@@ -135,9 +117,7 @@ export default class SeedScreen extends React.Component<
           Keep it in a safe place.
         </div>
       );
-      textarea = (
-        <textarea className="ffn" readOnly={true} value={this.state.mnemonic} />
-      );
+      textarea = <textarea className="ffn" readOnly value={this.state.mnemonic} />;
       buttons = (
         <div id="textButtons">
           <button className="refreshSeedBtn" onClick={this.refreshMnemonic} />
@@ -174,11 +154,7 @@ export default class SeedScreen extends React.Component<
         </div>
 
         <div className="registrationControls">
-          <button
-            disabled={!this.state.seedFormValid}
-            className="largeBtn"
-            onClick={this.submitSeed}
-          >
+          <button disabled={!this.state.seedFormValid} className="largeBtn" onClick={this.submitSeed}>
             Continue
           </button>
           <button className="backBtn" onClick={this.onBack}>

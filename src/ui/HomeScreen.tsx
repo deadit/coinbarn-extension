@@ -1,16 +1,16 @@
-import React from "react";
-import Account from "../Account";
-import CoinbarnStorage from "../CoinbarnStorage";
-import Constants from "../Constants";
-import AboutWindow from "./AboutWindow";
-import HomeHeader from "./elements/HomeHeader";
-import InfoProfile from "./elements/InfoProfile";
-import IssueTab from "./elements/IssueTab";
-import Popup, { IPopupStatus } from "./elements/Popup";
-import SendTab from "./elements/SendTab";
-import TabSelector from "./elements/TabSelector";
-import TransactionsTab from "./elements/TransactionsTab";
-import SettingsWindow from "./SettingsWindow";
+import React from 'react';
+import Account from '../Account';
+import CoinbarnStorage from '../CoinbarnStorage';
+import Constants from '../Constants';
+import AboutWindow from './AboutWindow';
+import HomeHeader from './elements/HomeHeader';
+import InfoProfile from './elements/InfoProfile';
+import IssueTab from './elements/IssueTab';
+import Popup, { IPopupStatus } from './elements/Popup';
+import SendTab from './elements/SendTab';
+import TabSelector from './elements/TabSelector';
+import TransactionsTab from './elements/TransactionsTab';
+import SettingsWindow from './SettingsWindow';
 
 interface IHomeScreenProps {
   account: Account;
@@ -25,11 +25,9 @@ interface IHomeScreenState {
   aboutOn: boolean;
 }
 
-export default class HomeScreen extends React.Component<
-  IHomeScreenProps,
-  IHomeScreenState
-> {
+export default class HomeScreen extends React.Component<IHomeScreenProps, IHomeScreenState> {
   public infoProfileElement: any;
+
   public interval: any;
 
   constructor(props) {
@@ -38,10 +36,10 @@ export default class HomeScreen extends React.Component<
       account: this.props.account,
       currTabIndex: 0,
       popupStatus: {
-        show: false
+        show: false,
       },
       settingsOn: false,
-      aboutOn: false
+      aboutOn: false,
     };
     this.infoProfileElement = React.createRef();
   }
@@ -67,7 +65,7 @@ export default class HomeScreen extends React.Component<
   }
 
   public setCurrTab(currTabIndex: number, refresh: boolean = false) {
-    this.setState({ currTabIndex: currTabIndex });
+    this.setState({ currTabIndex });
     if (refresh) {
       this.refresh();
     }
@@ -80,26 +78,19 @@ export default class HomeScreen extends React.Component<
   public toggleSettings() {
     const settingsOn = !this.state.settingsOn;
     const aboutOn = this.state.aboutOn && !settingsOn;
-    this.setState({ settingsOn: settingsOn, aboutOn: aboutOn });
+    this.setState({ settingsOn, aboutOn });
   }
 
   public toggleMenuBlock() {
     const aboutOn = !this.state.aboutOn;
     const settingsOn = this.state.settingsOn && !aboutOn;
-    this.setState({ settingsOn: settingsOn, aboutOn: aboutOn });
+    this.setState({ settingsOn, aboutOn });
   }
 
   public updateAccountName(newName: string): boolean {
-    const renamed = CoinbarnStorage.renameAccount(
-      this.props.account.name,
-      newName
-    );
+    const renamed = CoinbarnStorage.renameAccount(this.props.account.name, newName);
     if (renamed) {
-      const newAcc = new Account(
-        newName,
-        this.props.account.mnemonic,
-        this.props.account.minerAcc
-      );
+      const newAcc = new Account(newName, this.props.account.mnemonic, this.props.account.minerAcc);
       this.props.updateState({ account: newAcc });
     }
     return renamed;
@@ -107,17 +98,11 @@ export default class HomeScreen extends React.Component<
 
   public render() {
     const tabs = [
-      <SendTab
-        account={this.state.account}
-        setPopup={this.setPopup.bind(this)}
-      />,
+      <SendTab account={this.state.account} setPopup={this.setPopup.bind(this)} />,
       <TransactionsTab account={this.state.account} />,
-      <IssueTab
-        account={this.state.account}
-        setPopup={this.setPopup.bind(this)}
-      />
+      <IssueTab account={this.state.account} setPopup={this.setPopup.bind(this)} />,
     ];
-    let window: Element = <div></div>;
+    let window: Element = <div />;
     if (this.state.aboutOn) {
       window = <AboutWindow toggle={this.toggleMenuBlock.bind(this)} />;
     } else if (this.state.settingsOn) {
@@ -128,20 +113,17 @@ export default class HomeScreen extends React.Component<
           setPopup={this.setPopup.bind(this)}
           onLogout={() =>
             this.props.updateState({
-              screen: "welcome",
-              account: Account.empty
+              screen: 'welcome',
+              account: Account.empty,
             })
           }
         />
       );
     } else {
       window = [
-        <InfoProfile
-          account={this.state.account}
-          updateAccountName={name => this.updateAccountName(name)}
-        />,
+        <InfoProfile account={this.state.account} updateAccountName={(name) => this.updateAccountName(name)} />,
         <TabSelector setCurrTab={this.setCurrTab.bind(this)} />,
-        tabs[this.state.currTabIndex]
+        tabs[this.state.currTabIndex],
       ];
     }
 
@@ -155,10 +137,7 @@ export default class HomeScreen extends React.Component<
         />
         {window}
       </div>,
-      <Popup
-        status={this.state.popupStatus}
-        onClose={() => this.setPopup({ show: false })}
-      />
+      <Popup status={this.state.popupStatus} onClose={() => this.setPopup({ show: false })} />,
     ];
   }
 }

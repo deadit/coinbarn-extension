@@ -1,4 +1,4 @@
-import Account from "./Account";
+import Account from './Account';
 
 declare const TextDecoder;
 declare const TextEncoder;
@@ -22,9 +22,8 @@ export default class CoinbarnStorage {
       localStorage.setItem(newName, currentAccData);
       this.deleteAccount(oldName);
       return true;
-    } else {
-      return oldName === newName;
     }
+    return oldName === newName;
   }
 
   public static deleteAccount(name: string): void {
@@ -32,11 +31,8 @@ export default class CoinbarnStorage {
     localStorage.removeItem(name);
   }
 
-  public static async saveAccount(
-    account: Account,
-    password: string
-  ): Promise<void> {
-    const enc = new TextEncoder("utf-8");
+  public static async saveAccount(account: Account, password: string): Promise<void> {
+    const enc = new TextEncoder('utf-8');
     const bytesToEncrypt = enc.encode(account.encode());
     const ct = await this.encrypt(bytesToEncrypt, password);
     localStorage.setItem(account.name, this.arrayBufferToBase64(ct));
@@ -44,34 +40,19 @@ export default class CoinbarnStorage {
 
   public static async getAccount(name, password): Promise<Account> {
     const item = localStorage.getItem(name);
-    const decryptedBytes = await this.decrypt(
-      this.base64ToArrayBuffer(item),
-      password
-    );
-    const dec = new TextDecoder("utf-8");
+    const decryptedBytes = await this.decrypt(this.base64ToArrayBuffer(item), password);
+    const dec = new TextDecoder('utf-8');
     const content = dec.decode(decryptedBytes);
     return Account.decode(name, content);
   }
 
   public static async encrypt(plaintext, password): Promise<Buffer> {
-    const salt = Buffer.from(
-      await window.crypto.getRandomValues(new Uint8Array(12))
-    );
+    const salt = Buffer.from(await window.crypto.getRandomValues(new Uint8Array(12)));
     const key = await CoinbarnStorage.deriveKey(password, salt);
-    const iv = Buffer.from(
-      await window.crypto.getRandomValues(new Uint8Array(12))
-    );
-    const aesGcmParams = { name: "AES-GCM", iv: iv };
-    const cipherText = await window.crypto.subtle.encrypt(
-      aesGcmParams,
-      key,
-      plaintext
-    );
-    return Buffer.concat([
-      Buffer.from(salt),
-      Buffer.from(iv),
-      Buffer.from(cipherText)
-    ]);
+    const iv = Buffer.from(await window.crypto.getRandomValues(new Uint8Array(12)));
+    const aesGcmParams = { name: 'AES-GCM', iv };
+    const cipherText = await window.crypto.subtle.encrypt(aesGcmParams, key, plaintext);
+    return Buffer.concat([Buffer.from(salt), Buffer.from(iv), Buffer.from(cipherText)]);
   }
 
   public static async decrypt(cipherText, password): Promise<string> {
@@ -79,37 +60,27 @@ export default class CoinbarnStorage {
     const iv = Buffer.from(cipherText.slice(12, 24));
     const toDecrypt = Buffer.from(cipherText.slice(24));
     const key = await CoinbarnStorage.deriveKey(password, salt);
-    const aesGcmParams = { name: "AES-GCM", iv: iv };
+    const aesGcmParams = { name: 'AES-GCM', iv };
     return await window.crypto.subtle.decrypt(aesGcmParams, key, toDecrypt);
   }
 
   public static async deriveKey(password, salt) {
     const pbkdf2params = {
-      hash: "SHA-256",
+      hash: 'SHA-256',
       iterations: 10000,
-      name: "PBKDF2",
-      salt: salt
+      name: 'PBKDF2',
+      salt,
     };
-    const encoder = new TextEncoder("utf-8");
-    const baseKey = await window.crypto.subtle.importKey(
-      "raw",
-      encoder.encode(password),
-      "PBKDF2",
-      false,
-      ["deriveKey"]
-    );
-    const aesKeyGenParams = { name: "AES-GCM", length: 256 };
-    return await window.crypto.subtle.deriveKey(
-      pbkdf2params,
-      baseKey,
-      aesKeyGenParams,
-      false,
-      ["encrypt", "decrypt"]
-    );
+    const encoder = new TextEncoder('utf-8');
+    const baseKey = await window.crypto.subtle.importKey('raw', encoder.encode(password), 'PBKDF2', false, [
+      'deriveKey',
+    ]);
+    const aesKeyGenParams = { name: 'AES-GCM', length: 256 };
+    return await window.crypto.subtle.deriveKey(pbkdf2params, baseKey, aesKeyGenParams, false, ['encrypt', 'decrypt']);
   }
 
   public static arrayBufferToBase64(buffer): string {
-    let binary = "";
+    let binary = '';
     const bytes = new Uint8Array(buffer);
     const len = bytes.byteLength;
     for (let i = 0; i < len; i += 1) {

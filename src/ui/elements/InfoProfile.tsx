@@ -1,7 +1,7 @@
-import React from "react";
-import Account from "../../Account";
-import avaSmallImg from "../../img/avatar_small.svg";
-import Dropdown from "./Dropdown";
+import React from 'react';
+import Account from '../../Account';
+import avaSmallImg from '../../img/avatar_small.svg';
+import Dropdown from './Dropdown';
 
 declare const navigator;
 
@@ -16,10 +16,7 @@ interface IInfoState {
   invalidAddress: boolean;
 }
 
-export default class InfoProfile extends React.Component<
-  IInfoProps,
-  IInfoState
-> {
+export default class InfoProfile extends React.Component<IInfoProps, IInfoState> {
   public accNameInput: any;
 
   constructor(props: IInfoProps) {
@@ -27,7 +24,7 @@ export default class InfoProfile extends React.Component<
     this.state = {
       account: this.props.account,
       readOnlyAddress: true,
-      invalidAddress: false
+      invalidAddress: false,
     };
     this.accNameInput = React.createRef();
   }
@@ -59,17 +56,13 @@ export default class InfoProfile extends React.Component<
 
   public render() {
     const balances = this.props.account.balances();
-    const balanceList: string[] = balances.map(a => `${a.amount} ${a.name}`);
+    const balanceList: string[] = balances.map((a) => `${a.amount} ${a.name}`);
     return (
       <div className="profileInfo">
         <div className="avatarDiv">
           <img src={avaSmallImg} alt="homa" />
         </div>
-        <div
-          className={"accountDiv".concat(
-            this.state.invalidAddress ? " invalidInput" : ""
-          )}
-        >
+        <div className={'accountDiv'.concat(this.state.invalidAddress ? ' invalidInput' : '')}>
           <span className="nameInUseSpan">Name is already in use</span>
           <div className="accountNameDiv">
             <input
@@ -90,7 +83,7 @@ export default class InfoProfile extends React.Component<
             </div>
           </div>
         </div>
-        <div className="spacerDiv"></div>
+        <div className="spacerDiv" />
         <div className="balanceDiv">
           <div className="balanceText ffn">Account balance:</div>
           <Dropdown list={balanceList} />

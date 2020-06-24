@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 interface IDropdownProps {
   list: string[];
@@ -11,25 +11,22 @@ interface IDropdownState {
   currentIndex: number;
 }
 
-export default class Dropdown extends React.Component<
-  IDropdownProps,
-  IDropdownState
-> {
+export default class Dropdown extends React.Component<IDropdownProps, IDropdownState> {
   public static defaultProps = {
-    onUpdate: () => {}
+    onUpdate: () => {},
   };
 
   constructor(props) {
     super(props);
     this.state = {
       currentIndex: 0,
-      expanded: false
+      expanded: false,
     };
   }
 
   public toggleList() {
     this.setState({
-      expanded: !this.state.expanded
+      expanded: !this.state.expanded,
     });
   }
 
@@ -42,16 +39,13 @@ export default class Dropdown extends React.Component<
   }
 
   public render() {
-    const list = this.props.list;
+    const { list } = this.props;
     const { expanded, currentIndex } = this.state;
     return (
       <div className="dd-wrapper">
-        <div
-          className={expanded ? "dd-header-expanded" : "dd-header"}
-          onClick={this.toggleList.bind(this)}
-        >
+        <div className={expanded ? 'dd-header-expanded' : 'dd-header'} onClick={this.toggleList.bind(this)}>
           <div className="dd-header-title">{list[currentIndex]}</div>
-          <div className="dd-trigger"></div>
+          <div className="dd-trigger" />
         </div>
         {expanded ? (
           <ul className="dd-list">
@@ -61,9 +55,7 @@ export default class Dropdown extends React.Component<
                   key={this.key(index)}
                   className="dd-list-item"
                   onClick={() => {
-                    this.setState({ currentIndex: index }, () =>
-                      this.props.onUpdate()
-                    );
+                    this.setState({ currentIndex: index }, () => this.props.onUpdate());
                     this.toggleList();
                   }}
                 >
@@ -73,7 +65,7 @@ export default class Dropdown extends React.Component<
             })}
           </ul>
         ) : (
-          ""
+          ''
         )}
       </div>
     );

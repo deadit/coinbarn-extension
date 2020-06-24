@@ -1,5 +1,5 @@
-import React from "react";
-import InputMessages from "./InputMessages";
+import React from 'react';
+import InputMessages from './InputMessages';
 
 interface IEyedInputBlockProps {
   name: string;
@@ -15,41 +15,38 @@ interface IEyedInputBlockState {
   type: string;
 }
 
-export default class EyedInputBlock extends React.Component<
-  IEyedInputBlockProps,
-  IEyedInputBlockState
-> {
+export default class EyedInputBlock extends React.Component<IEyedInputBlockProps, IEyedInputBlockState> {
   public static defaultProps = {
-    name: "name",
+    name: 'name',
     onUpdate: () => {},
-    type: "password"
+    type: 'password',
   };
 
   constructor(props) {
     super(props);
     this.state = {
-      error: "error",
-      validity: "",
-      value: "",
+      error: 'error',
+      validity: '',
+      value: '',
       isValid: false,
-      type: "password"
+      type: 'password',
     };
   }
 
   public toggleType() {
-    this.setState({ type: this.state.type === "" ? "password" : "" });
+    this.setState({ type: this.state.type === '' ? 'password' : '' });
   }
 
   public handleUserInput(e) {
-    const value = e.target.value;
+    const { value } = e.target;
     const validity = this.props.validate(value);
     this.updateValidity(validity, value);
   }
 
   public render() {
-    let className = "validateInput";
-    if (this.state.value !== "") {
-      className = className.concat(" ").concat(this.state.validity);
+    let className = 'validateInput';
+    if (this.state.value !== '') {
+      className = className.concat(' ').concat(this.state.validity);
     }
 
     return (
@@ -61,10 +58,7 @@ export default class EyedInputBlock extends React.Component<
           onChange={this.handleUserInput.bind(this)}
           value={this.state.value}
         />
-        <button
-          className="eyeButton"
-          onClick={this.toggleType.bind(this)}
-        ></button>
+        <button className="eyeButton" onClick={this.toggleType.bind(this)} />
         <InputMessages msg="" errorMsg={this.state.error} />
       </div>
     );
@@ -74,21 +68,21 @@ export default class EyedInputBlock extends React.Component<
     const isValid = validity.score >= 1;
     let validityClass: string;
     if (validity.score < 1) {
-      validityClass = "invalidInput";
+      validityClass = 'invalidInput';
     } else if (validity.score < 3) {
-      validityClass = "semivalidInput";
+      validityClass = 'semivalidInput';
     } else {
-      validityClass = "validInput";
+      validityClass = 'validInput';
     }
 
     this.setState(
       {
-        value: value,
+        value,
         error: validity.error,
-        isValid: isValid,
-        validity: validityClass
+        isValid,
+        validity: validityClass,
       },
-      this.props.onUpdate
+      this.props.onUpdate,
     );
   }
 }

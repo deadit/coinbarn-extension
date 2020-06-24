@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 interface ITabSelectorProps {
   setCurrTab(n: number): void;
@@ -8,14 +8,11 @@ interface ITabSelectorState {
   currTab: keyof object[];
 }
 
-export default class TabSelector extends React.Component<
-  ITabSelectorProps,
-  ITabSelectorState
-> {
+export default class TabSelector extends React.Component<ITabSelectorProps, ITabSelectorState> {
   constructor(props) {
     super(props);
     this.state = {
-      currTab: 0
+      currTab: 0,
     };
   }
 

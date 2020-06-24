@@ -1,8 +1,8 @@
-import { Transaction } from "@coinbarn/ergo-ts";
-import { unitsInOneErgo } from "@coinbarn/ergo-ts/dist/constants";
-import React from "react";
-import Account from "../../Account";
-import Constants from "../../Constants";
+import { Transaction } from '@coinbarn/ergo-ts';
+import { unitsInOneErgo } from '@coinbarn/ergo-ts/dist/constants';
+import React from 'react';
+import Account from '../../Account';
+import Constants from '../../Constants';
 
 interface ITransactionViewProps {
   account: Account;
@@ -18,32 +18,26 @@ interface ITxProps {
   explorerHref: string;
 }
 
-export default class TransactionView extends React.Component<
-  ITransactionViewProps
-> {
+export default class TransactionView extends React.Component<ITransactionViewProps> {
   public txToProps(tx: Transaction): ITxProps {
     const date = new Date();
     if (tx.timestamp) {
       date.setTime(tx.timestamp);
     }
-    const myInputs = tx.inputs.filter(i =>
-      this.props.account.accountData.isMine(i)
-    );
-    const myOutputs = tx.outputs.filter(i =>
-      this.props.account.accountData.isMine(i)
-    );
+    const myInputs = tx.inputs.filter((i) => this.props.account.accountData.isMine(i));
+    const myOutputs = tx.outputs.filter((i) => this.props.account.accountData.isMine(i));
     let action: string;
     let amountStr: string;
     let fee: string;
     const tokensReceived = this.props.account.boxesToBalances(myOutputs, false);
     if (myInputs.length === 0) {
-      fee = "";
+      fee = '';
       // incoming transaction
       const ergsReceived = myOutputs.reduce((sum, { value }) => sum + value, 0);
       if (ergsReceived > Constants.fee || tokensReceived.length === 0) {
         // ERG transfer transaction
-        action = "Received ERG";
-        amountStr = (ergsReceived / unitsInOneErgo).toString().concat(" ERG");
+        action = 'Received ERG';
+        amountStr = (ergsReceived / unitsInOneErgo).toString().concat(' ERG');
       } else {
         // Custom token transfer transaction - extract the first one
         const token = tokensReceived[0];
@@ -52,34 +46,24 @@ export default class TransactionView extends React.Component<
       }
     } else {
       // outcoming transaction
-      const issuedToken = tokensReceived.find(
-        tr => tx.inputs.find(inp => inp.boxId === tr.tokenId) !== undefined
-      );
-      fee = "0.0011 ERG";
+      const issuedToken = tokensReceived.find((tr) => tx.inputs.find((inp) => inp.boxId === tr.tokenId) !== undefined);
+      fee = '0.0011 ERG';
       if (issuedToken !== undefined) {
         // Token issue transaction
         action = `Issued ${issuedToken.name}`;
         amountStr = `${issuedToken.amount} ${issuedToken.name}`;
       } else {
         // Send transactions
-        const foreignOutputs = tx.outputs.filter(
-          i => !this.props.account.accountData.isMine(i)
-        );
-        const ergsSent = foreignOutputs.reduce(
-          (sum, { value }) => sum + value,
-          0
-        );
-        const tokensSent = this.props.account.boxesToBalances(
-          foreignOutputs,
-          false
-        );
+        const foreignOutputs = tx.outputs.filter((i) => !this.props.account.accountData.isMine(i));
+        const ergsSent = foreignOutputs.reduce((sum, { value }) => sum + value, 0);
+        const tokensSent = this.props.account.boxesToBalances(foreignOutputs, false);
         if (foreignOutputs.length === 1) {
           // Only fee output is present - transfer to self
-          action = "Self transfer";
-          amountStr = "";
+          action = 'Self transfer';
+          amountStr = '';
         } else if (tokensSent.length === 0) {
           // ERG transfer transaction
-          action = "Sent ERG";
+          action = 'Sent ERG';
           amountStr = `-${(ergsSent - Constants.fee) / unitsInOneErgo} ERG`;
         } else {
           // Custom transfer transaction - extract the first one
@@ -91,14 +75,11 @@ export default class TransactionView extends React.Component<
     }
 
     return {
-      action: action,
-      amountStr: amountStr,
-      fee: fee,
-      date: date
-        .toLocaleDateString("en-US")
-        .concat(" at ")
-        .concat(date.toLocaleTimeString("en-US")),
-      explorerHref: `${Constants.explorerURL}/en/transactions/${tx.id}`
+      action,
+      amountStr,
+      fee,
+      date: date.toLocaleDateString('en-US').concat(' at ').concat(date.toLocaleTimeString('en-US')),
+      explorerHref: `${Constants.explorerURL}/en/transactions/${tx.id}`,
     };
   }
 
@@ -106,11 +87,7 @@ export default class TransactionView extends React.Component<
     const txProps = this.txToProps(this.props.tx);
 
     return (
-      <div
-        className={"transactionDiv ".concat(
-          this.props.confirmed ? "txConfirmed" : "txUnconfirmed"
-        )}
-      >
+      <div className={'transactionDiv '.concat(this.props.confirmed ? 'txConfirmed' : 'txUnconfirmed')}>
         <div className="txColumnsDiv">
           <div className="txLeftDiv">
             <div className="txDate">{txProps.date}</div>
@@ -118,21 +95,13 @@ export default class TransactionView extends React.Component<
           </div>
           <div className="txRightDiv">
             <div className="txDetails">
-              <a
-                target="_blank"
-                rel="noopener noreferrer"
-                href={txProps.explorerHref}
-              >
-                {" "}
-                Details{" "}
+              <a target="_blank" rel="noopener noreferrer" href={txProps.explorerHref}>
+                {' '}
+                Details{' '}
               </a>
             </div>
-            <div className="txAmount f2">
-              {txProps.amountStr ? txProps.amountStr : "\xa0"}
-            </div>
-            <div className="txFeeDiv">
-              {txProps.fee ? "FEE: ".concat(txProps.fee) : ""}
-            </div>
+            <div className="txAmount f2">{txProps.amountStr ? txProps.amountStr : '\xa0'}</div>
+            <div className="txFeeDiv">{txProps.fee ? 'FEE: '.concat(txProps.fee) : ''}</div>
           </div>
         </div>
       </div>

@@ -1,15 +1,15 @@
-import "css/index.css";
-import React from "react";
-import Account from "./Account";
-import Background from "./Background";
-import CoinbarnStorage from "./CoinbarnStorage";
-import BarnScreen from "./ui/BarnScreen";
-import HomeScreen from "./ui/HomeScreen";
-import PasswordScreen from "./ui/PasswordScreen";
-import RegistrationScreen from "./ui/RegistrationScreen";
-import SeedScreen from "./ui/SeedScreen";
-import WelcomeBackScreen from "./ui/WelcomeBackScreen";
-import WelcomeScreen from "./ui/WelcomeScreen";
+import 'css/index.css';
+import React from 'react';
+import Account from './Account';
+import Background from './Background';
+import CoinbarnStorage from './CoinbarnStorage';
+import BarnScreen from './ui/BarnScreen';
+import HomeScreen from './ui/HomeScreen';
+import PasswordScreen from './ui/PasswordScreen';
+import RegistrationScreen from './ui/RegistrationScreen';
+import SeedScreen from './ui/SeedScreen';
+import WelcomeBackScreen from './ui/WelcomeBackScreen';
+import WelcomeScreen from './ui/WelcomeScreen';
 
 export interface IAppState {
   account: Account;
@@ -27,23 +27,19 @@ export default class App extends React.Component<{}, IAppState> {
     if (!currState) {
       this.state = {
         account: Account.empty,
-        screen: "welcome",
+        screen: 'welcome',
         // account: new Account('testa', 'work dynamic rule sister achieve code brisk insect soccer travel medal all'),
         // screen: 'home',
-        regPassword: "",
-        regRecover: false
+        regPassword: '',
+        regRecover: false,
       };
     } else {
-      const acc = new Account(
-        currState.account.name,
-        currState.account.mnemonic,
-        currState.account.minerAcc
-      );
+      const acc = new Account(currState.account.name, currState.account.mnemonic, currState.account.minerAcc);
       this.state = {
         account: acc,
         screen: currState.screen,
         regPassword: currState.regPassword,
-        regRecover: currState.regRecover
+        regRecover: currState.regRecover,
       };
     }
   }
@@ -58,27 +54,17 @@ export default class App extends React.Component<{}, IAppState> {
     const registeredAccounts = CoinbarnStorage.getAccountNames();
     let curScreen = <div>Unknown screen {this.state.screen}</div>;
     switch (this.state.screen) {
-      case "welcome":
+      case 'welcome':
         if (registeredAccounts.length === 0) {
           curScreen = <WelcomeScreen updateState={this.updateState} />;
         } else {
-          curScreen = (
-            <WelcomeBackScreen
-              updateState={this.updateState}
-              registeredAccounts={registeredAccounts}
-            />
-          );
+          curScreen = <WelcomeBackScreen updateState={this.updateState} registeredAccounts={registeredAccounts} />;
         }
         break;
-      case "register":
-        curScreen = (
-          <RegistrationScreen
-            updateState={this.updateState}
-            registeredAccounts={registeredAccounts}
-          />
-        );
+      case 'register':
+        curScreen = <RegistrationScreen updateState={this.updateState} registeredAccounts={registeredAccounts} />;
         break;
-      case "seed":
+      case 'seed':
         curScreen = (
           <SeedScreen
             account={this.state.account}
@@ -88,24 +74,14 @@ export default class App extends React.Component<{}, IAppState> {
           />
         );
         break;
-      case "password":
-        curScreen = (
-          <PasswordScreen
-            account={this.state.account}
-            updateState={this.updateState}
-          />
-        );
+      case 'password':
+        curScreen = <PasswordScreen account={this.state.account} updateState={this.updateState} />;
         break;
-      case "start":
+      case 'start':
         curScreen = <BarnScreen updateState={this.updateState} />;
         break;
-      case "home":
-        curScreen = (
-          <HomeScreen
-            account={this.state.account}
-            updateState={this.updateState}
-          />
-        );
+      case 'home':
+        curScreen = <HomeScreen account={this.state.account} updateState={this.updateState} />;
         break;
     }
 

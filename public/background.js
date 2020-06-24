@@ -8,14 +8,14 @@ var clearLogoutTimer = () => {
   }
 };
 
-var setLogoutTimer = time => {
+var setLogoutTimer = (time) => {
   clearLogoutTimer();
   timeoutHandle = window.setTimeout(() => {
     appState = null;
   }, time);
 };
 
-chrome.runtime.onConnect.addListener(function(port) {
+chrome.runtime.onConnect.addListener(function (port) {
   if (port.name === "bgWatchdog") {
     port.onDisconnect.addListener(() => {
       setLogoutTimer(logoutTime);

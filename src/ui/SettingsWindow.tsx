@@ -1,10 +1,10 @@
-import React from "react";
-import Account from "../Account";
-import CoinbarnStorage from "../CoinbarnStorage";
-import backupImg from "../img/backup.svg";
-import deleteImg from "../img/delete.svg";
-import logoutImg from "../img/log_out.svg";
-import { IPopupStatus } from "./elements/Popup";
+import React from 'react';
+import Account from '../Account';
+import CoinbarnStorage from '../CoinbarnStorage';
+import backupImg from '../img/backup.svg';
+import deleteImg from '../img/delete.svg';
+import logoutImg from '../img/log_out.svg';
+import { IPopupStatus } from './elements/Popup';
 
 declare const navigator;
 
@@ -15,9 +15,7 @@ interface ISettingsWindowProps {
   setPopup(p: IPopupStatus): void;
 }
 
-export default class SettingsWindow extends React.Component<
-  ISettingsWindowProps
-> {
+export default class SettingsWindow extends React.Component<ISettingsWindowProps> {
   public copyMnemonic = () => {
     navigator.clipboard.writeText(this.props.account.mnemonic);
   };
@@ -34,13 +32,13 @@ export default class SettingsWindow extends React.Component<
   public deleteAcc = () => {
     this.props.setPopup({
       show: true,
-      title: "Are you sure?",
-      line1: "Delete your account?",
+      title: 'Are you sure?',
+      line1: 'Delete your account?',
       line2: (
         <button onClick={this.confirmedDeleteAcc.bind(this)} className="redBtn">
           Delete
         </button>
-      )
+      ),
     });
   };
 

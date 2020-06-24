@@ -1,5 +1,5 @@
-import React from "react";
-import InputMessages from "./InputMessages";
+import React from 'react';
+import InputMessages from './InputMessages';
 
 interface IInputBlockProps {
   large: boolean;
@@ -16,24 +16,21 @@ interface IInputBlockState {
   error: string;
 }
 
-export default class InputBlock extends React.Component<
-  IInputBlockProps,
-  IInputBlockState
-> {
+export default class InputBlock extends React.Component<IInputBlockProps, IInputBlockState> {
   public static defaultProps = {
     large: false,
     password: false,
-    name: "name",
+    name: 'name',
     onUpdate: () => {},
-    regexp: /.*/
+    regexp: /.*/,
   };
 
   constructor(props) {
     super(props);
     this.state = {
-      error: "error",
+      error: 'error',
       isValid: false,
-      value: ""
+      value: '',
     };
   }
 
@@ -45,20 +42,17 @@ export default class InputBlock extends React.Component<
 
   private updateValue(value) {
     const error = this.props.validate(value);
-    const isValid = error === "";
-    this.setState(
-      { value: value, error: error, isValid: isValid },
-      this.props.onUpdate
-    );
+    const isValid = error === '';
+    this.setState({ value, error, isValid }, this.props.onUpdate);
   }
 
   public render() {
-    let className = this.props.large ? "validateInputLarge" : "validateInput";
-    if (this.state.value !== "") {
+    let className = this.props.large ? 'validateInputLarge' : 'validateInput';
+    if (this.state.value !== '') {
       if (this.state.isValid) {
-        className = className.concat(" validInput");
+        className = className.concat(' validInput');
       } else {
-        className = className.concat(" invalidInput");
+        className = className.concat(' invalidInput');
       }
     }
 
@@ -67,7 +61,7 @@ export default class InputBlock extends React.Component<
         <div className="inputLabel ffn">{this.props.name}</div>
         <input
           className="fts"
-          type={this.props.password ? "password" : ""}
+          type={this.props.password ? 'password' : ''}
           onChange={this.handleUserInput.bind(this)}
           value={this.state.value}
         />

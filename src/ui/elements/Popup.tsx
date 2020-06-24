@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 interface IPopupProps {
   onClose: () => void;
@@ -19,18 +19,14 @@ export default class Popup extends React.Component<IPopupProps, {}> {
       return (
         <div className="overlay">
           <div className="popup">
-            <button
-              className="closeBtnSmall"
-              onClick={this.props.onClose}
-            ></button>
+            <button className="closeBtnSmall" onClick={this.props.onClose} />
             <div className="greeting">{msg.title}</div>
             <p>{msg.line1}</p>
             <p>{msg.line2}</p>
           </div>
         </div>
       );
-    } else {
-      return <></>;
     }
+    return <></>;
   }
 }

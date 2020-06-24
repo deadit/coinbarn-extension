@@ -1,5 +1,5 @@
-import React from "react";
-import barnImg from "../img/barn.svg";
+import React from 'react';
+import barnImg from '../img/barn.svg';
 
 interface IBarnProps {
   updateState: (a: any) => void;
@@ -14,13 +14,10 @@ export default class BarnScreen extends React.Component<IBarnProps, {}> {
         </div>
         <div className="greeting">Welcome to the Barn!</div>
         <div className="registrationControls">
-          <button
-            className="largeBtn"
-            onClick={() => this.props.updateState({ screen: "home" })}
-          >
+          <button className="largeBtn" onClick={() => this.props.updateState({ screen: 'home' })}>
             Start
           </button>
-          <button className="backBtn" disabled={true}>
+          <button className="backBtn" disabled>
             Back
           </button>
         </div>

@@ -1,16 +1,18 @@
 @font-face {
-  font-family: 'Gloria Hallelujah';
+  font-family: "Gloria Hallelujah";
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: local('Gloria Hallelujah'), local('GloriaHallelujah'), url("../fonts/LYjYdHv3kUk9BMV96EIswT9DIbW-MIS11zY.ttf") format('truetype');
+  src: local("Gloria Hallelujah"), local("GloriaHallelujah"),
+    url("../fonts/LYjYdHv3kUk9BMV96EIswT9DIbW-MIS11zY.ttf") format("truetype");
 }
 @font-face {
-  font-family: 'Nunito';
+  font-family: "Nunito";
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: local('Nunito Regular'), local('Nunito-Regular'), url("../fonts/XRXV3I6Li01BKofINeaE.ttf") format('truetype');
+  src: local("Nunito Regular"), local("Nunito-Regular"),
+    url("../fonts/XRXV3I6Li01BKofINeaE.ttf") format("truetype");
 }
 h1 {
   font-family: Nunito;
@@ -110,7 +112,7 @@ a {
   display: flex;
 }
 .dd-trigger {
-  content: ' ';
+  content: " ";
   transform: scaleY(-1) rotateX(180deg);
   transition: 0.2s;
   background: url("../img/arrow_down_gray.svg");
@@ -119,7 +121,7 @@ a {
   background-position: center;
 }
 .dd-header-expanded .dd-trigger {
-  content: ' ';
+  content: " ";
   transform: rotateX(180deg);
   transition: 0.2s;
   background: url("../img/arrow_down_gray.svg");
@@ -337,7 +339,7 @@ button::-moz-focus-inner {
 .refreshSeedBtn {
   background: url("../img/refresh.svg");
 }
-.validateInput input+button {
+.validateInput input + button {
   position: absolute;
   margin: 12px 76px 12px 12px;
   width: 16px;
@@ -345,22 +347,22 @@ button::-moz-focus-inner {
   padding: 0;
   right: 0;
 }
-.validInput input+.eyeButton {
+.validInput input + .eyeButton {
   background: url("../img/eye_open_green.svg");
 }
-.invalidInput input+.eyeButton {
+.invalidInput input + .eyeButton {
   background: url("../img/eye_open_red.svg");
 }
-.semivalidInput input+.eyeButton {
+.semivalidInput input + .eyeButton {
   background: url("../img/eye_open_yellow.svg");
 }
-.validInput input[type=password]+.eyeButton {
+.validInput input[type="password"] + .eyeButton {
   background: url("../img/eye_closed_green.svg");
 }
-.invalidInput input[type=password]+.eyeButton {
+.invalidInput input[type="password"] + .eyeButton {
   background: url("../img/eye_closed_red.svg");
 }
-.semivalidInput input[type=password]+.eyeButton {
+.semivalidInput input[type="password"] + .eyeButton {
   background: url("../img/eye_closed_yellow.svg");
 }
 .welcomeBackScreen {
@@ -399,7 +401,7 @@ button::-moz-focus-inner {
 .welcomeBackScreen .dd-trigger {
   width: 24px;
   height: 24px;
-  background-color: rgba(143,178,62,0.2);
+  background-color: rgba(143, 178, 62, 0.2);
   margin: 0.5em;
 }
 .welcomeBackScreen .dd-list {
@@ -421,7 +423,7 @@ button::-moz-focus-inner {
   padding-top: 8px;
 }
 .welcomeBackScreen .dd-background-div:hover {
-  background-color: rgba(143,178,62,0.2);
+  background-color: rgba(143, 178, 62, 0.2);
 }
 .welcomeBackScreen .largeBtn {
   margin-top: 35.5px;
@@ -461,13 +463,13 @@ input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
-input[type=number] {
+input[type="number"] {
   -moz-appearance: textfield;
 }
 .validateInput.validInput input {
   background-image: url("../img/input_green.svg");
 }
-input[type=password] {
+input[type="password"] {
   font-size: 16px;
 }
 .validateInputLarge input,
@@ -492,7 +494,7 @@ input[type=password] {
 .validateInput.semivalidInput input {
   background-image: url("../img/input_yellow.svg");
 }
-.validateInput.semivalidInput input[type=password] {
+.validateInput.semivalidInput input[type="password"] {
   color: #ffdc82;
 }
 .invalidInput .errorDiv {
@@ -620,7 +622,7 @@ textarea {
 }
 .checkboxDiv label::before {
   cursor: pointer;
-  content: '';
+  content: "";
   width: 24px;
   height: 24px;
   background: url("../img/checkbox_unchecked.svg");
@@ -856,7 +858,7 @@ textarea {
   visibility: visible;
 }
 .homeScreen .profileInfo .spacerDiv {
-  content: '';
+  content: "";
   width: 2px;
   height: 100%;
   background: url("../img/info_spacer.svg");
@@ -974,7 +976,7 @@ textarea {
   color: #8fb23e;
 }
 .transactionsListTop {
-  content: '';
+  content: "";
   height: 42px;
   max-height: 42px;
 }
@@ -1054,13 +1056,13 @@ textarea {
   align-items: flex-end;
 }
 .txConfirmed .txLeftDiv::after {
-  content: 'Confirmed';
+  content: "Confirmed";
   color: #6aafcd;
   background: url("../img/tx_confirmed.svg");
   background-repeat: no-repeat;
 }
 .txUnconfirmed .txLeftDiv::after {
-  content: 'Unconfirmed';
+  content: "Unconfirmed";
   color: #f3be35;
   background: url("../img/tx_unconfirmed.svg");
   background-repeat: no-repeat;
@@ -1094,7 +1096,7 @@ textarea {
   background-position: 0 31px;
   width: 32%;
 }
-.tabSelector label>h3 {
+.tabSelector label > h3 {
   cursor: pointer;
   color: #81827f;
   text-align: center;
@@ -1104,7 +1106,7 @@ textarea {
 }
 .tabSelector label:before {
   display: block;
-  content: ' ';
+  content: " ";
   padding-top: 11px;
 }
 .tabSelector input {
@@ -1114,11 +1116,11 @@ textarea {
   height: 0;
   width: 0;
 }
-.tabSelector input[type="radio"]:checked+label {
+.tabSelector input[type="radio"]:checked + label {
   background-image: url("../img/tab_button_green.svg");
   background-position: 0 31px;
 }
-.tabSelector input[type="radio"]:checked+label h3 {
+.tabSelector input[type="radio"]:checked + label h3 {
   color: #8fb23e;
 }
 .overlay {
@@ -1128,7 +1130,7 @@ textarea {
   bottom: 0;
   left: 0;
   right: 0;
-  background: rgba(143,178,62,0.85);
+  background: rgba(143, 178, 62, 0.85);
   padding-top: 223px;
 }
 .popup {

@@ -1,5 +1,5 @@
-import React from "react";
-import InputMessages from "./InputMessages";
+import React from 'react';
+import InputMessages from './InputMessages';
 
 interface IInputBlockMaxProps {
   maxValue: number;
@@ -16,17 +16,14 @@ interface IInputBlockMaxState {
   error: string;
 }
 
-export default class InputBlockMax extends React.Component<
-  IInputBlockMaxProps,
-  IInputBlockMaxState
-> {
+export default class InputBlockMax extends React.Component<IInputBlockMaxProps, IInputBlockMaxState> {
   constructor(props) {
     super(props);
     this.state = {
-      error: "",
+      error: '',
       isValid: undefined,
       maxValue: this.props.maxValue,
-      value: ""
+      value: '',
     };
   }
 
@@ -42,12 +39,12 @@ export default class InputBlockMax extends React.Component<
   }
 
   public render() {
-    let className = "validateInputMax";
+    let className = 'validateInputMax';
     if (this.state.isValid !== undefined) {
       if (this.state.isValid) {
-        className = className.concat(" validInput");
+        className = className.concat(' validInput');
       } else {
-        className = className.concat(" invalidInput");
+        className = className.concat(' invalidInput');
       }
     }
 
@@ -56,12 +53,12 @@ export default class InputBlockMax extends React.Component<
         <div className="inputLabel ffn">{this.props.name}</div>
         <div className="inputMax">
           <input
-            className={this.props.large ? "fts inputLarge" : "fts"}
+            className={this.props.large ? 'fts inputLarge' : 'fts'}
             value={this.state.value}
             onChange={this.handleUserInput.bind(this)}
           />
           <button className="smallBtn" onClick={this.maxClick}>
-            {" "}
+            {' '}
             MAX
           </button>
         </div>
@@ -72,10 +69,7 @@ export default class InputBlockMax extends React.Component<
 
   private updateValue(value) {
     const error = this.props.validate(value);
-    const isValid = error === "";
-    this.setState(
-      { value: value, error: error, isValid: isValid },
-      this.props.onUpdate
-    );
+    const isValid = error === '';
+    this.setState({ value, error, isValid }, this.props.onUpdate);
   }
 }
