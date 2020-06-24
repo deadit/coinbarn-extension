@@ -108,7 +108,10 @@ export default class Account {
           4,
           box.additionalRegisters[r4].length
         );
-        const name = Serializer.stringFromHex(slicedR4).slice(0, Constants.maxTokenNameLength);
+        const name = Serializer.stringFromHex(slicedR4).slice(
+          0,
+          Constants.maxTokenNameLength
+        );
         const r6 = "R6";
         const slicedR6 = box.additionalRegisters[r6].slice(
           4,
@@ -129,7 +132,7 @@ export default class Account {
           amount: a.amount,
           amountInt: a.amount,
           decimals: 0,
-          name: 'unknown',
+          name: "unknown",
           tokenId: a.tokenId
         };
       }

@@ -1,30 +1,33 @@
-import React from 'react'
-import InputMessages from './InputMessages';
+import React from "react";
+import InputMessages from "./InputMessages";
 
 interface IInputBlockMaxProps {
-  maxValue: number
-  validate: (value: number) => string
-  name: string
-  large: boolean
-  onUpdate: () => void
+  maxValue: number;
+  validate: (value: number) => string;
+  name: string;
+  large: boolean;
+  onUpdate: () => void;
 }
 
 interface IInputBlockMaxState {
-  maxValue: number
-  value: string
-  isValid: boolean | undefined
-  error: string
+  maxValue: number;
+  value: string;
+  isValid: boolean | undefined;
+  error: string;
 }
 
-export default class InputBlockMax extends React.Component<IInputBlockMaxProps, IInputBlockMaxState> {
+export default class InputBlockMax extends React.Component<
+  IInputBlockMaxProps,
+  IInputBlockMaxState
+> {
   constructor(props) {
     super(props);
     this.state = {
-      error: '',
+      error: "",
       isValid: undefined,
       maxValue: this.props.maxValue,
-      value: '',
-    }
+      value: ""
+    };
   }
 
   public maxClick = () => {
@@ -39,33 +42,40 @@ export default class InputBlockMax extends React.Component<IInputBlockMaxProps, 
   }
 
   public render() {
-    let className = 'validateInputMax';
+    let className = "validateInputMax";
     if (this.state.isValid !== undefined) {
       if (this.state.isValid) {
-        className = className.concat(' validInput');
+        className = className.concat(" validInput");
       } else {
-        className = className.concat(' invalidInput');
+        className = className.concat(" invalidInput");
       }
     }
 
     return (
       <div className={className}>
-        <div className='inputLabel ffn'>{this.props.name}</div>
-        <div className='inputMax'>
-          <input className={this.props.large ? 'fts inputLarge' : 'fts'}
-                 value={this.state.value}
-                 onChange={this.handleUserInput.bind(this)}/>
-          <button className='smallBtn' onClick={this.maxClick}> MAX</button>
+        <div className="inputLabel ffn">{this.props.name}</div>
+        <div className="inputMax">
+          <input
+            className={this.props.large ? "fts inputLarge" : "fts"}
+            value={this.state.value}
+            onChange={this.handleUserInput.bind(this)}
+          />
+          <button className="smallBtn" onClick={this.maxClick}>
+            {" "}
+            MAX
+          </button>
         </div>
-        <InputMessages msg='FEE: 0.0011 ERG' errorMsg={this.state.error} />
+        <InputMessages msg="FEE: 0.0011 ERG" errorMsg={this.state.error} />
       </div>
     );
   }
 
   private updateValue(value) {
     const error = this.props.validate(value);
-    const isValid = error === '';
-    this.setState({value: value, error: error, isValid: isValid},
-      this.props.onUpdate);
+    const isValid = error === "";
+    this.setState(
+      { value: value, error: error, isValid: isValid },
+      this.props.onUpdate
+    );
   }
 }

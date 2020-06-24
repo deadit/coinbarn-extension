@@ -1,42 +1,43 @@
-import React from 'react';
-import InputMessages from './InputMessages';
+import React from "react";
+import InputMessages from "./InputMessages";
 
 interface IEyedInputBlockProps {
-  name: string,
-  onUpdate: () => void
-  validate: (value: string) => { score: number, error: string }
+  name: string;
+  onUpdate: () => void;
+  validate: (value: string) => { score: number; error: string };
 }
 
 interface IEyedInputBlockState {
-  value: string
-  validity: string
-  isValid: boolean
-  error: string
-  type: string
+  value: string;
+  validity: string;
+  isValid: boolean;
+  error: string;
+  type: string;
 }
 
-export default class EyedInputBlock extends React.Component<IEyedInputBlockProps, IEyedInputBlockState> {
-
+export default class EyedInputBlock extends React.Component<
+  IEyedInputBlockProps,
+  IEyedInputBlockState
+> {
   public static defaultProps = {
-    name: 'name',
-    onUpdate: () => {
-    },
-    type: 'password',
+    name: "name",
+    onUpdate: () => {},
+    type: "password"
   };
 
   constructor(props) {
     super(props);
     this.state = {
-      error: 'error',
-      validity: '',
-      value: '',
+      error: "error",
+      validity: "",
+      value: "",
       isValid: false,
-      type: 'password'
+      type: "password"
     };
   }
 
   public toggleType() {
-    this.setState({type: this.state.type === '' ? 'password' : ''});
+    this.setState({ type: this.state.type === "" ? "password" : "" });
   }
 
   public handleUserInput(e) {
@@ -46,38 +47,48 @@ export default class EyedInputBlock extends React.Component<IEyedInputBlockProps
   }
 
   public render() {
-    let className = 'validateInput';
-    if (this.state.value !== '') {
-      className = className.concat(' ').concat(this.state.validity);
+    let className = "validateInput";
+    if (this.state.value !== "") {
+      className = className.concat(" ").concat(this.state.validity);
     }
 
     return (
       <div className={className}>
-        <div className='inputLabel ffn'>{this.props.name}</div>
-        <input type={this.state.type} className='fts'
-               onChange={this.handleUserInput.bind(this)} value={this.state.value}/>
-        <button className='eyeButton' onClick={this.toggleType.bind(this)}></button>
-        <InputMessages msg='' errorMsg={this.state.error} />
+        <div className="inputLabel ffn">{this.props.name}</div>
+        <input
+          type={this.state.type}
+          className="fts"
+          onChange={this.handleUserInput.bind(this)}
+          value={this.state.value}
+        />
+        <button
+          className="eyeButton"
+          onClick={this.toggleType.bind(this)}
+        ></button>
+        <InputMessages msg="" errorMsg={this.state.error} />
       </div>
     );
   }
 
   private updateValidity(validity, value) {
-    const isValid = (validity.score >= 1);
+    const isValid = validity.score >= 1;
     let validityClass: string;
     if (validity.score < 1) {
-      validityClass = 'invalidInput';
+      validityClass = "invalidInput";
     } else if (validity.score < 3) {
-      validityClass = 'semivalidInput';
+      validityClass = "semivalidInput";
     } else {
-      validityClass = 'validInput';
+      validityClass = "validInput";
     }
 
-    this.setState({
-      value: value,
-      error: validity.error,
-      isValid: isValid,
-      validity: validityClass
-    }, this.props.onUpdate);
+    this.setState(
+      {
+        value: value,
+        error: validity.error,
+        isValid: isValid,
+        validity: validityClass
+      },
+      this.props.onUpdate
+    );
   }
 }

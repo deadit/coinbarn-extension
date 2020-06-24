@@ -29,12 +29,12 @@
   },
   "main": "public/electron.js",
   "scripts": {
-    "start": "react-scripts start",
+    "start": "react-scripts start --open",
     "build": "stylus src/css/index.styl && react-scripts build && cp -r build coinbarn && zip -r coinbarn.zip coinbarn",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "buildCss": "stylus src/css/index.styl",
-    "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\" \"public/**/*.js\"",
+    "format": "prettier --write \"src/**/*.ts\" \"src/**/*.tsx\" \"src/**/*.jsx\" \"src/**/*.js\" \"public/**/*.js\"",
     "lint": "tslint -p tsconfig.json --fix",
     "electron-dev": "ELECTRON_START_URL=http://localhost:3000 electron .",
     "electron-pack": "yarn build && yarn electron-builder"
